@@ -1,0 +1,33 @@
+{
+  "name": "expressjs-starter-app",
+  "version": "1.0.0",
+  "description": "This is to help setup an ExpressJs application with an organized folder structure",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon  -r dotenv/config src/server.js"
+  },
+  "keywords": [
+    "Node.js",
+    "ExpressJs",
+    "Backend",
+    "Development"
+  ],
+  "author": "Siddarth Bulusu",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.1.0",
+    "mongoose": "^5.13.7",
+    "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.29.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4"
+  }
+}
