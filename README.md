@@ -2,7 +2,7 @@
 
 This project will help to quickly setup and start a Node.js + ExpressJs application with a well organized folder structure and necessary helper functions.
 
-You can get more information about the folder structure in my blog [Best folder structure for an ExpressJs application](https://awesomeopensource.com/project/elangosundar/awesome-README-templates)
+You can get more information about the folder structure in my blog [Best folder structure for an ExpressJs application](https://siddarth-bulusu.medium.com/best-folder-structure-for-a-expressjs-application-33de818bb420)
 
 ## Create your project using this repository
 
