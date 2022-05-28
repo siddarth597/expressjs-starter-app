@@ -32,13 +32,13 @@ app.get("/", (req, res, next) => {
   });
 });
 
-// app.use(auth);
+app.use(auth);
 
 // fetch routes
 let userRouter = require("./routes/user.route");
 
 //define root routes.
-app.use("/user", userRouter);
+app.use("/users", userRouter);
 
 app.use(invalidRouteHandler);
 app.use(globalErrorHandler);

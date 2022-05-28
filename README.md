@@ -37,7 +37,7 @@ Replace the contents in **package.json** file
 
 ## Note
 
-Search and uncomment the below lines in **.gitignore** file to avoid commiting **.env** files into the repository.
+1. Search and uncomment the below lines in **.gitignore** file to avoid commiting **.env** files into the repository.
 
 ```env
 # dotenv environment variables file (Uncomment the below to avoid commiting the environment files to the repository)
@@ -45,3 +45,5 @@ Search and uncomment the below lines in **.gitignore** file to avoid commiting *
 # .env
 # .env.test
 ```
+
+2. For better clarity of the implementation I commited my JWT keys to the repository, this is a bad practice, public and private keys should not be commited in the repository and maintained as a secret.

@@ -1,17 +1,12 @@
 let jwt = require("jsonwebtoken");
-const util = require("util");
-
-const jwtVerify = util.promisify(jwt.verify);
-
+const { verifyToken } = require("../helpers/jwt.helper.js");
 const User = require("../models/User");
 
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
-
 async function auth(req, res, next) {
-  console.log(`auth middleware`);
+  console.log("auth middleware");
 
   try {
-    if (req.url.includes("user/register")) {
+    if (req.url.includes("users/register") || req.url.includes("users/login")) {
       // whitelisted endpoints
       next();
     } else {
@@ -26,28 +21,45 @@ async function auth(req, res, next) {
 
       // verify auth credentials
       let accessToken = req.headers.authorization.split(" ")[1];
-      console.log("oauth accessToken", accessToken);
+
       let decoded = null;
+
       if (accessToken) {
-        try {
-          decoded = await jwtVerify(accessToken, JWT_SECRET_KEY);
-        } catch (error) {
-          res.status(401).send(error);
-          return;
+        const tokenObj = await verifyToken(accessToken);
+
+        console.log(tokenObj);
+        if (tokenObj?.success && tokenObj?.decoded) {
+          decoded = tokenObj.decoded;
+        } else if (!tokenObj?.success) {
+          return res.status(500).json(tokenObj);
         }
       }
-      if (decoded) {
-        const result = await User.find({ id: decoded._id }).exec();
+
+      if (decoded?.data?._id) {
+        const result = await User.find({ id: decoded.data._id }).exec();
         if (result) {
-          //attach user to request object
-          req.user = decoded;
+          //attach user to request object to easily access user details further in the request lifecycle
+          req.user = decoded.data;
           console.log(
             `decoded user from JWT token ${JSON.stringify(req.user)}`
           );
           next();
         } else {
-          res.status(404).send("User not Found");
+          console.log("user not found");
+          const response = {
+            success: false,
+            error: "UserNotFound",
+            message: "User not found",
+          };
+          res.status(404).json(response);
         }
+      } else {
+        const response = {
+          success: false,
+          error: "TokenDecodingError",
+          message: "Unable to decode token",
+        };
+        res.status(404).json(response);
       }
     }
   } catch (error) {
@@ -56,7 +68,7 @@ async function auth(req, res, next) {
       error: error,
     };
     console.log(
-      `Error caught in auth.helper.js -> ${JSON.stringify(
+      `Error caught in auth.middleware.js -> ${JSON.stringify(
         response
       )}, sending 500 status to client`
     );
