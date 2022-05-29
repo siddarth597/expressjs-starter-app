@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/user.controller");
-const { authorize } = require("../middlewares/authorize.middleware");
+const authorize = require("../middlewares/authorize.middleware");
 
 // this route is accessible by anyone who has either user or admin role
 router.route("/").get([authorize()], userController.getAllUsers);

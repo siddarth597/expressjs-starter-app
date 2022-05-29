@@ -1,12 +1,12 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
 const app = express();
 
 const PORT = process.env.PORT; // port at which server listening
 
-const auth = require("./middlewares/auth.middleware");
+const authenticate = require("./middlewares/authenticate.middleware");
+const connectDb = require("./helpers/db.helper");
 const {
   globalErrorHandler,
   invalidRouteHandler,
@@ -17,12 +17,7 @@ app.use(cors());
 app.options("*", cors());
 
 //conncect to db
-
-mongoose.connect(process.env.MONGO_DB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-mongoose.set("useFindAndModify", false);
+connectDb();
 
 // sample for express server
 app.get("/", (req, res, next) => {
@@ -32,7 +27,7 @@ app.get("/", (req, res, next) => {
   });
 });
 
-app.use(auth);
+app.use(authenticate);
 
 // fetch routes
 let userRouter = require("./routes/user.route");

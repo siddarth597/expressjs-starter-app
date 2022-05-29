@@ -2,7 +2,7 @@ let jwt = require("jsonwebtoken");
 const { verifyToken } = require("../helpers/jwt.helper.js");
 const User = require("../models/User");
 
-async function auth(req, res, next) {
+async function authenticate(req, res, next) {
   console.log("auth middleware");
 
   try {
@@ -76,4 +76,4 @@ async function auth(req, res, next) {
   }
 }
 
-module.exports = auth;
+module.exports = authenticate;

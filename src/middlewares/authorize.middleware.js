@@ -45,4 +45,4 @@ const authorize = (authorizeAdminOnly = false) => {
   ];
 };
 
-module.exports = { authorize };
+module.exports = authorize;
