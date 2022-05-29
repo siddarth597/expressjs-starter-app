@@ -75,6 +75,7 @@ const login = async (req, res) => {
           email: user.email,
           name: user.name,
           _id: user._id,
+          role: user.role,
         };
 
         const tokenObj = await signToken(userObj);
@@ -123,8 +124,26 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  console.log("controller method user  -> deleteUser");
+  try {
+    const result = await User.deleteOne({
+      _id: mongoose.Types.ObjectId(req.params.id),
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "User deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error });
+  }
+};
+
 module.exports = {
   register,
   login,
   getAllUsers,
+  deleteUser,
 };

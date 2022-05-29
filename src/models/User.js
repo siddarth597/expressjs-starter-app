@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: true },
     registeredAt: { type: Date, required: true },
     hashedPassword: { type: String, required: true },
+    role: { type: String, required: false, default: "user" }, // currently this is set from the database for ease of implementation
   },
   { versionKey: false, autoIndex: true }
 );
