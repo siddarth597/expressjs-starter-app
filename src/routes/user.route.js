@@ -6,7 +6,7 @@ const authorize = require("../middlewares/authorize.middleware");
 // this route is accessible by anyone who has either user or admin role
 router.route("/").get([authorize()], userController.getAllUsers);
 
-// below routes do not require both authenticatino & authorization and are whitelisted in middlewares/auth.middleware.js file
+// below routes do not require both authenticatino & authorization and are whitelisted in middlewares/authenticate.middleware.js file
 router.route("/register").post(userController.register);
 router.route("/login").post(userController.login);
 
